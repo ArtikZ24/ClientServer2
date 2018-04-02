@@ -30,6 +30,7 @@ class ClientThread(Thread):
                     conn.send("data not found")
 
             if "ADD" in data:
+                print "adding data {}".format(data[4:])
                 hash_object = hashlib.sha512(data[4:])
                 hex_dig = hash_object.hexdigest()
                 print(hex_dig)
