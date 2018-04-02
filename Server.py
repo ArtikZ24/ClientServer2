@@ -35,11 +35,17 @@ class ClientThread(Thread):
             # conn.send(data)  # echo
             # conn.send(data)  # echo
             if "GET" in data:
+                data = self.sendToService(data)
                 conn.send("Getting Data")
+                conn.send(data + " KEY")
 
             if "ADD" in data:
                 data = self.sendToService(data)
                 conn.send(data + " HASH")
+
+            if "PRINT ALL" in data:
+                data = self.sendToService(data)
+                conn.send(data)
 
 
 TCP_IP = '0.0.0.0'

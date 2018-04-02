@@ -7,6 +7,7 @@ import hashlib
 
 DataDict = {}
 
+
 class ClientThread(Thread):
 
     def __init__(self, ip, port):
@@ -20,18 +21,23 @@ class ClientThread(Thread):
             data = conn.recv(2048)
             if not data: break
             print "received data:", data
-            hash_object = hashlib.sha512(data)
-            hex_dig = hash_object.hexdigest()
-            print(hex_dig)
-            DataDict[data] = hex_dig
-            conn.send(hex_dig)  # echo
-            # conn.send(data)  # echo
-            # if "GET" in data:
-            #     conn.send("Demo versionn")
-            #
-            # if "ADD" in data:
-            #     data = data.replace("/echo", "")
-            #     conn.send(data + "n")
+
+            if "GET" in data:
+                if data in DataDict:
+                    conn.send(DataDict[data])
+                else:
+                    conn.send("data not found")
+
+            if "ADD" in data:
+                hash_object = hashlib.sha512(data[4:])
+                hex_dig = hash_object.hexdigest()
+                print(hex_dig)
+                DataDict[data] = hex_dig
+                conn.send(hex_dig)  # echo
+
+            if "PRINT ALL" in data:
+                print DataDict
+                conn.send(DataDict)
 
 
 TCP_IP = '0.0.0.0'
