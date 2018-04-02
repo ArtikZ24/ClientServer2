@@ -4,6 +4,7 @@ import socket
 from threading import Thread
 from SocketServer import ThreadingMixIn
 import hashlib
+import json
 
 DataDict = {}
 
@@ -37,7 +38,8 @@ class ClientThread(Thread):
 
             if "PRINT ALL" in data:
                 print DataDict
-                conn.send(DataDict)
+                data_string = json.dumps(DataDict)
+                conn.send(data_string)
 
 
 TCP_IP = '0.0.0.0'
