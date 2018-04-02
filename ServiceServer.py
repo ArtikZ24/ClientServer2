@@ -3,7 +3,9 @@
 import socket
 from threading import Thread
 from SocketServer import ThreadingMixIn
+import hashlib
 
+DataDict = {}
 
 class ClientThread(Thread):
 
@@ -18,7 +20,11 @@ class ClientThread(Thread):
             data = conn.recv(2048)
             if not data: break
             print "received data:", data
-            conn.send(data)  # echo
+            hash_object = hashlib.sha512(data)
+            hex_dig = hash_object.hexdigest()
+            print(hex_dig)
+            DataDict[data] = hex_dig
+            conn.send(hex_dig)  # echo
             # conn.send(data)  # echo
             # if "GET" in data:
             #     conn.send("Demo versionn")

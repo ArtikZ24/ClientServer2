@@ -11,6 +11,7 @@ class ClientThread(Thread):
         Thread.__init__(self)
         self.ip = ip
         self.port = port
+        self.data = None
         print "[+] New thread started for " + ip + ":" + str(port)
 
     def sendToService(self, message):
@@ -24,6 +25,7 @@ class ClientThread(Thread):
         data = s.recv(BUFFER_SIZE)
         s.close()
         print "server received data:", data
+        return data
 
     def run(self):
         while True:
@@ -36,9 +38,8 @@ class ClientThread(Thread):
                 conn.send("Getting Data")
 
             if "ADD" in data:
-                data = data.replace("/echo", "")
-                conn.send(data + "n")
-                self.sendToService(data)
+                data = self.sendToService(data)
+                conn.send(data + " HASH")
 
 
 TCP_IP = '0.0.0.0'
