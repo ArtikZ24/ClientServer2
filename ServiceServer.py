@@ -24,6 +24,7 @@ class ClientThread(Thread):
             print "received data:", data
 
             if "GET" in data:
+                data = data[4:]
                 if data in DataDict:
                     conn.send(DataDict[data])
                 else:
@@ -31,7 +32,7 @@ class ClientThread(Thread):
 
             if "ADD" in data:
                 data = data[4:]
-                print "adding data {}".format(data[4:])
+                print "adding data {}".format(data)
                 hash_object = hashlib.sha512(data)
                 hex_dig = hash_object.hexdigest()
                 print(hex_dig)
