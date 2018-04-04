@@ -25,7 +25,7 @@ while True:
         for i in range(0, int(message_number)):
             message = id_generator()
             s.send("ADD " + message)
-            time.sleep(int(message_delay))
+            time.sleep(message_delay)
     else:
         s.send(message)
         data = s.recv(BUFFER_SIZE)
