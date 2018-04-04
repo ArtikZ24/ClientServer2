@@ -24,7 +24,7 @@ while True:
         message_delay = message.split(" ")[2]
         for i in range(0, int(message_number)):
             message = id_generator()
-            s.send(message)
+            s.send("ADD " + message)
             time.sleep(int(message_delay))
     else:
         s.send(message)
