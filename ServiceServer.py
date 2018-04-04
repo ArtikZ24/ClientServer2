@@ -47,7 +47,7 @@ class ClientThread(Thread):
 
 TCP_IP = '0.0.0.0'
 TCP_PORT = 60
-BUFFER_SIZE = 20  # Normally 1024, but we want fast response
+BUFFER_SIZE = 2048
 
 tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 tcpsock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
